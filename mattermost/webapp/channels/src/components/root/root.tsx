@@ -503,6 +503,7 @@ export default class Root extends React.PureComponent<Props, State> {
                                         path={`${product.baseURL}/public`}
                                         render={(props) => {
                                             return (
+                                                console.log('product', product),
                                                 <Pluggable
                                                     pluggableName={'Product'}
                                                     subComponentName={'publicComponent'}
