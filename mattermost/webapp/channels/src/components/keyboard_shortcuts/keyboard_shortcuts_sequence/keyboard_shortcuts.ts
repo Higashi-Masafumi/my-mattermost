@@ -433,6 +433,16 @@ export const KEYBOARD_SHORTCUTS = {
             defaultMessage: 'Link:\t⌘|⌥|K',
         },
     }),
+    msgMarkdownUnderline: defineMessages({
+        default: {
+            id: 'shortcuts.msgs.markdown.underline',
+            defaultMessage: 'Underline:\tCtrl|U',
+        },
+        mac: {
+            id: 'shortcuts.msgs.markdown.underline.mac',
+            defaultMessage: 'Underline:\t⌘|U',
+        },
+    }),
     filesUpload: defineMessages({
         default: {
             id: 'shortcuts.files.upload',

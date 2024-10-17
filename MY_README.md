@@ -113,3 +113,15 @@ $ make run
 - [Component作成におけるReduxの利用法](https://developers.mattermost.com/contribute/more-info/webapp/redux/actions/)
 
     
+## 参照するべきファイル
+
+- [create_comment.tsx](#create_coment.tsx)
+- [use_submit.tsx](#use_submit.tsx)
+
+
+## 現在分かったこと
+
+- `channels/src/components/advanced_text_editor/advanced_text_editor.tsx`：実際に入力欄コンポーネントが実装されている
+- `channels/src/components/advanced_text_editor/formatting_bar/formatting_icon.tsx`：入力欄のアイコンを設定する
+- `channels/src/components/advanced_text_editor/formatting_bar/hooks.tsx`：入力欄に渡す
+- 

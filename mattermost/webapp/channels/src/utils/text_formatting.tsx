@@ -341,6 +341,7 @@ export function formatText(
         }
     }
 
+    // contenteditableにして返す
     return output;
 }
 

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-export type MarkdownMode = 'bold' | 'italic' | 'link' | 'strike' | 'code' | 'heading' | 'quote' | 'ul' | 'ol'
+export type MarkdownMode = 'bold' | 'italic' | 'link' | 'strike' | 'code' | 'heading' | 'quote' | 'ul' | 'ol' | 'underline';
 
 export type ApplyMarkdownOptions = {
     markdownMode: MarkdownMode;
@@ -76,6 +76,8 @@ export function applyMarkdown(options: ApplyMarkdownOptions): ApplyMarkdownRetur
         return applyMarkdownToSelection({selectionEnd, selectionStart, message, delimiter});
     case 'code':
         return applyCodeMarkdown({selectionEnd, selectionStart, message});
+    case 'underline':
+        return applyUnderlineMarkdown({selectionEnd, selectionStart, message});
     }
 
     throw Error('Unsupported markdown mode: ' + markdownMode);
@@ -517,3 +519,20 @@ function findWordStart(text: string, start: number) {
 function isSelectionMultiline(message: string, selectionStart: number, selectionEnd: number) {
     return message.slice(selectionStart, selectionEnd).includes('\n');
 }
+
+function applyUnderlineMarkdown(options: ApplySpecificMarkdownOptions): ApplyMarkdownReturnValue {
+    const {selectionEnd, selectionStart, message} = options;
+
+    // デリミタを定義（Markdownの下線記法がないため、HTMLタグを使用）
+    const delimiterStart = '~~';
+    const delimiterEnd = '~~';
+
+    return applyMarkdownToSelection({
+        selectionEnd,
+        selectionStart,
+        message,
+        delimiterStart,
+        delimiterEnd,
+    });
+}
+

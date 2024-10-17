@@ -50,14 +50,14 @@ const useResponsiveFormattingBar = (ref: React.RefObject<HTMLDivElement>): WideM
 };
 
 const MAP_WIDE_MODE_TO_CONTROLS_QUANTITY: {[key in WideMode]: number} = {
-    wide: 9,
+    wide: 10,
     normal: 5,
     narrow: 3,
     min: 1,
 };
 
 export function splitFormattingBarControls(wideMode: WideMode) {
-    const allControls: MarkdownMode[] = ['bold', 'italic', 'strike', 'heading', 'link', 'code', 'quote', 'ul', 'ol'];
+    const allControls: MarkdownMode[] = ['bold', 'italic', 'strike', 'heading', 'link', 'code', 'quote', 'ul', 'ol', 'underline'];
 
     const controlsLength = MAP_WIDE_MODE_TO_CONTROLS_QUANTITY[wideMode];
 

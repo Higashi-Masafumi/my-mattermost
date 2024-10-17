@@ -88,6 +88,7 @@ const MAP_MARKDOWN_MODE_TO_ICON: Record<FormattingIconProps['mode'], React.FC<Ic
     quote: FormatQuoteOpenIcon,
     ul: FormatListBulletedIcon,
     ol: FormatListNumberedIcon,
+    underline: FormatStrikethroughVariantIcon,
 };
 
 const MAP_MARKDOWN_MODE_TO_ARIA_LABEL: Record<FormattingIconProps['mode'], MessageDescriptor> = defineMessages({
@@ -100,6 +101,7 @@ const MAP_MARKDOWN_MODE_TO_ARIA_LABEL: Record<FormattingIconProps['mode'], Messa
     quote: {id: 'accessibility.button.quote', defaultMessage: 'quote'},
     ul: {id: 'accessibility.button.bulleted_list', defaultMessage: 'bulleted list'},
     ol: {id: 'accessibility.button.numbered_list', defaultMessage: 'numbered list'},
+    underline: {id: 'accessibility.button.underline', defaultMessage: 'underline'},
 });
 
 const MAP_MARKDOWN_MODE_TO_KEYBOARD_SHORTCUTS: Record<FormattingIconProps['mode'], KeyboardShortcutDescriptor> = {
@@ -112,6 +114,7 @@ const MAP_MARKDOWN_MODE_TO_KEYBOARD_SHORTCUTS: Record<FormattingIconProps['mode'
     quote: KEYBOARD_SHORTCUTS.msgMarkdownQuote,
     ul: KEYBOARD_SHORTCUTS.msgMarkdownUl,
     ol: KEYBOARD_SHORTCUTS.msgMarkdownOl,
+    underline: KEYBOARD_SHORTCUTS.msgMarkdownUnderline,
 };
 
 const FormattingIcon = (props: FormattingIconProps): JSX.Element => {
