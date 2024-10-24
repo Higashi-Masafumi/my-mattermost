@@ -525,5 +525,15 @@ export const KEYBOARD_SHORTCUTS = {
             defaultMessage: 'Message priority',
         },
     }),
+    msgTranslate: defineMessages({
+        default: {
+            id: 'shortcuts.msgs.formatting_bar.translate',
+            defaultMessage: 'Translate',
+        },
+        mac: {
+            id: 'shortcuts.msgs.formatting_bar.translate',
+            defaultMessage: 'Translate',
+        },
+    }),
     calls: callsKBShortcuts,
 };

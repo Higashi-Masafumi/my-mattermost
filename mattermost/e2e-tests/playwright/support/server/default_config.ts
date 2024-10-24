@@ -57,10 +57,10 @@ const onPremServerConfig = (): Partial<TestAdminConfig> => {
             EnableUploads: true,
             PluginStates: {
                 'com.mattermost.calls': {
-                    Enable: false,
+                    Enable: true,
                 },
                 'com.mattermost.nps': {
-                    Enable: false,
+                    Enable: true,
                 },
                 playbooks: {
                     Enable: true,

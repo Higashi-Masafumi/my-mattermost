@@ -56,6 +56,7 @@ import ShowFormat from './show_formatting';
 import TexteditorActions from './texteditor_actions';
 import ToggleFormattingBar from './toggle_formatting_bar';
 import useEmojiPicker from './use_emoji_picker';
+import useTranslateButton from './use_translate';
 import useKeyHandler from './use_key_handler';
 import useOrientationHandler from './use_orientation_handler';
 import usePluginItems from './use_plugin_items';
@@ -229,6 +230,30 @@ const AdvancedTextEditor = ({
         });
     }, [showPreview, handleDraftChange, draft]);
 
+    // メッセージを英語に変換
+    const translateMessage = useCallback(() => {
+        const message = draft.message;
+        const url = "https://fastapi-example-u9g3.onrender.com/translate/";
+        const formData = new FormData();
+        formData.append("text", message);
+        fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                handleDraftChange({
+                    ...draft,
+                    message: data.text,
+                });
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }
+    , [draft, handleDraftChange]);
+
+
     const toggleAdvanceTextEditor = useCallback(() => {
         dispatch(savePreferences(currentUserId, [{
             category: Preferences.ADVANCED_TEXT_EDITOR,
@@ -247,6 +272,12 @@ const AdvancedTextEditor = ({
         enableEmojiPicker,
         toggleEmojiPicker,
     } = useEmojiPicker(readOnlyChannel, draft, caretPosition, setCaretPosition, handleDraftChange, showPreview, focusTextbox);
+    const {
+        translateButton,
+        toggleTranslatePopup,
+        hideTranslatePopup,
+        getTranslateButtonRef,
+    } = useTranslateButton(readOnlyChannel, draft, handleDraftChange, showPreview, focusTextbox);
     const {
         labels,
         additionalControl: priorityAdditionalControl,
