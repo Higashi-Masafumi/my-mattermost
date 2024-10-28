@@ -393,6 +393,14 @@ export function deleteAndRemovePost(post: Post): ActionFuncAsync<boolean, Global
     };
 }
 
+export function translatePostContent(post: Post): ActionFuncAsync {
+    return async (dispatch) => {
+        dispatch(PostActions.translatePost(post));
+        return {data: true};
+    };
+}
+
+
 export function toggleEmbedVisibility(postId: string): ThunkActionFunc<void, GlobalState> {
     return (dispatch, getState) => {
         const state = getState();
@@ -432,3 +440,4 @@ export function emitShortcutReactToLastPostFrom(emittedFrom: keyof typeof Consta
         payload: emittedFrom,
     };
 }
+

@@ -2128,6 +2128,24 @@ export default class Client4 {
         );
     };
 
+    translatePost = (post: Post) => {
+        // バックエンドがまだ実装されていないので、モックデータを返します
+        return new Promise<Post>((resolve) => {
+            // モックデータ: ここでは`message`が翻訳されたと仮定して、"Translated: "を追加
+            const translatedMessage = `Translated: ${post.message}`;
+            const newPost = {
+                ...post,
+                message: translatedMessage,  // 翻訳後のメッセージをセット
+            };
+            
+            // 1秒後にモックデータを返す
+            setTimeout(() => {
+                resolve(newPost);
+            }, 1000);
+        });
+    };
+    
+
     getPostThread = (postId: string, fetchThreads = true, collapsedThreads = false, collapsedThreadsExtended = false) => {
         // this is to ensure we have backwards compatibility for `getPostThread`
         return this.getPaginatedPostThread(postId, {fetchThreads, collapsedThreads, collapsedThreadsExtended});

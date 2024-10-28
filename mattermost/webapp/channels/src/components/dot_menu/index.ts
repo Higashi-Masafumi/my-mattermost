@@ -41,6 +41,7 @@ import {getSiteURL} from 'utils/url';
 import type {GlobalState} from 'types/store';
 
 import DotMenu from './dot_menu';
+import { translatePost } from 'mattermost-redux/actions/posts';
 
 type Props = {
     post: Post;
@@ -139,6 +140,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
             openModal,
             markPostAsUnread,
             setThreadFollow,
+            translatePost,
         }, dispatch),
     };
 }

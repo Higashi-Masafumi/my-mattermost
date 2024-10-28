@@ -21,10 +21,11 @@ import type {
     RelationOneToMany,
 } from '@mattermost/types/utilities';
 
-import {ChannelTypes, PostTypes, UserTypes, ThreadTypes, CloudTypes} from 'mattermost-redux/action_types';
+import {ChannelTypes, PostTypes, UserTypes, ThreadTypes, CloudTypes, TRANSLATE_POST_SUCCESS} from 'mattermost-redux/action_types';
 import {Posts} from 'mattermost-redux/constants';
 import {PostTypes as PostConstant} from 'mattermost-redux/constants/posts';
 import {comparePosts, isPermalink, shouldUpdatePost} from 'mattermost-redux/utils/post_utils';
+
 
 export function removeUnneededMetadata(post: Post) {
     if (!post.metadata) {
@@ -323,6 +324,23 @@ export function handlePosts(state: IDMappedObjects<Post> = {}, action: AnyAction
 
     case UserTypes.LOGOUT_SUCCESS:
         return {};
+
+    case TRANSLATE_POST_SUCCESS: {
+        const translatedPost = action.data;
+
+        // 既存のポストを更新する
+        const nextState = {
+            ...state,
+            [translatedPost.id]: {
+                ...state[translatedPost.id],
+                message: translatedPost.message, // メッセージを翻訳された内容に更新
+                translated: true, // 翻訳済みのフラグを追加
+            },
+        };
+
+        return nextState;
+    }
+
     default:
         return state;
     }
@@ -1620,3 +1638,4 @@ export default function reducer(state: Partial<PostsState> = {}, action: AnyActi
 
     return nextState;
 }
+

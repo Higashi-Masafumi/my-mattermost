@@ -12,7 +12,7 @@ import type {Reaction} from '@mattermost/types/reactions';
 import type {GlobalState} from '@mattermost/types/store';
 import type {UserProfile} from '@mattermost/types/users';
 
-import {PostTypes, ChannelTypes, FileTypes, IntegrationTypes} from 'mattermost-redux/action_types';
+import {PostTypes, ChannelTypes, FileTypes, IntegrationTypes, TRANSLATE_POST_SUCCESS} from 'mattermost-redux/action_types';
 import {selectChannel} from 'mattermost-redux/actions/channels';
 import {systemEmojis, getCustomEmojiByName} from 'mattermost-redux/actions/emojis';
 import {searchGroups} from 'mattermost-redux/actions/groups';
@@ -1125,6 +1125,23 @@ export function removePost(post: ExtendedPost): ActionFunc<boolean> {
             if (post.is_pinned) {
                 dispatch(decrementPinnedPostCount(post.channel_id));
             }
+        }
+        return {data: true};
+    };
+}
+
+export function translatePost(post: Post): ActionFuncAsync {
+    return async (dispatch, getState) => {
+        try {
+            const translatedPost = await Client4.translatePost(post);
+            dispatch({
+                type: TRANSLATE_POST_SUCCESS,
+                data: translatedPost,
+            });
+        } catch (error) {
+            forceLogoutIfNecessary(error, dispatch, getState);
+            dispatch(logError(error));
+            return {error};
         }
         return {data: true};
     };
