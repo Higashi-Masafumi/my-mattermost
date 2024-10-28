@@ -58,3 +58,5 @@ export {
     PlaybookType,
     ChannelBookmarkTypes,
 };
+
+export const TRANSLATE_POST_SUCCESS = 'TRANSLATE_POST_SUCCESS';

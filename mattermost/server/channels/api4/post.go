@@ -46,6 +46,7 @@ func (api *API) InitPost() {
 	api.BaseRoutes.PostForUser.Handle("/ack", api.APISessionRequired(unacknowledgePost)).Methods(http.MethodDelete)
 
 	api.BaseRoutes.Post.Handle("/move", api.APISessionRequired(moveThread)).Methods(http.MethodPost)
+	api.BaseRoutes.Post.Handle("/translate", api.APISessionRequired(translatePost)).Methods(http.MethodPost)
 }
 
 func createPost(c *Context, w http.ResponseWriter, r *http.Request) {
@@ -1328,4 +1329,61 @@ func hasPermittedWranglerRole(c *Context, user *model.User, channelMember *model
 	}
 
 	return false
+}
+
+func translatePost(c *Context, w http.ResponseWriter, r *http.Request) {
+	c.RequirePostId()
+	if c.Err != nil {
+		return
+	}
+
+	// リクエストボディから翻訳データを取得
+	var request struct {
+		TargetLanguage string `json:"target_language"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		c.SetInvalidParamWithErr("body", err)
+		return
+	}
+
+	if request.TargetLanguage == "" {
+		c.SetInvalidParam("target_language")
+		return
+	}
+
+	// 投稿を取得して権限を確認
+	post, err := c.App.GetPostIfAuthorized(c.AppContext, c.Params.PostId, c.AppContext.Session(), false)
+	if err != nil {
+		c.Err = err
+		return
+	}
+
+	// 翻訳処理（ここではモックデータとして"Translated: "を追加）
+	translatedMessage := "Translated in the Backend: " + post.Message
+
+    // 新しい投稿データを作成
+    translatedPost := &model.Post{
+        Id:        post.Id,
+        CreateAt:  post.CreateAt,
+        UpdateAt:  post.UpdateAt,
+        DeleteAt:  post.DeleteAt,
+        UserId:    post.UserId,
+        ChannelId: post.ChannelId,
+        RootId:    post.RootId,
+        OriginalId: post.OriginalId,
+        Message:   translatedMessage,
+        Type:      post.Type,
+        Props:     post.Props,
+        Hashtags:  post.Hashtags,
+        Filenames: post.Filenames,
+        FileIds:   post.FileIds,
+        PendingPostId: post.PendingPostId,
+        Metadata:  post.Metadata,
+    }
+
+	// レスポンスとして翻訳された投稿を返す
+	if err := json.NewEncoder(w).Encode(&translatedPost); err != nil {
+		c.Logger.Warn("Error while writing response", mlog.Err(err))
+	}
+
 }

@@ -2128,6 +2128,16 @@ export default class Client4 {
         );
     };
 
+    translatePost = (post: Post) => {
+        const postId = post.id;
+        const targetLanguage = "english";
+        return this.doFetch<Post>(
+            `${this.getPostRoute(postId)}/translate`,
+            {method: 'post', body: JSON.stringify({target_language: targetLanguage})},
+        );
+    };
+    
+
     getPostThread = (postId: string, fetchThreads = true, collapsedThreads = false, collapsedThreadsExtended = false) => {
         // this is to ensure we have backwards compatibility for `getPostThread`
         return this.getPaginatedPostThread(postId, {fetchThreads, collapsedThreads, collapsedThreadsExtended});

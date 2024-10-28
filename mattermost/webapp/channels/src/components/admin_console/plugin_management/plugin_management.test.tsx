@@ -348,7 +348,7 @@ describe('components/PluginManagement', () => {
                     ...defaultProps.config.PluginSettings,
                     Enable: true,
                     EnableUploads: true,
-                    AllowInsecureDownloadURL: false,
+                    AllowInsecureDownloadURL: true,
                 },
             },
             pluginStatuses: {
@@ -405,7 +405,7 @@ describe('components/PluginManagement', () => {
                     ...defaultProps.config.PluginSettings,
                     Enable: true,
                     EnableUploads: true,
-                    AllowInsecureDownloadURL: false,
+                    AllowInsecureDownloadURL: true,
                 },
             },
             pluginStatuses: {

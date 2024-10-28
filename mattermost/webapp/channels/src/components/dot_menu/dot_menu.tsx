@@ -13,6 +13,7 @@ import {
     ContentCopyIcon,
     DotsHorizontalIcon,
     EmoticonPlusOutlineIcon,
+    GlobeCheckedIcon,
     LinkVariantIcon,
     MarkAsUnreadIcon,
     MessageArrowRightOutlineIcon,
@@ -121,6 +122,11 @@ type Props = {
          * Function to set the thread as followed/unfollowed
          */
         setThreadFollow: (userId: string, teamId: string, threadId: string, newState: boolean) => void;
+
+        /**
+         * Function to translate the Post Content
+         */
+        translatePost: (post: Post, locale: string) => void;
 
     }; // TechDebt: Made non-mandatory while converting to typescript
 
@@ -326,6 +332,10 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
             followingThread,
         );
     };
+
+    handleTranslateMenuItemActivated = (e: ChangeEvent) => {
+        this.props.actions.translatePost(this.props.post, this.props.intl.locale);
+    }
 
     handleCommentClick = (e: ChangeEvent) => {
         trackDotMenuEvent(e, TELEMETRY_LABELS.REPLY);
@@ -695,6 +705,20 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
                         isDestructive={true}
                     />
                 }
+                <Menu.Item
+                    id={`translate_post_${this.props.post.id}`}
+                    data-testid={`translate_post_${this.props.post.id}`}
+                    labels={
+                        <FormattedMessage
+                            id='post_info.translate'
+                            defaultMessage='Translate'
+                        />
+                    }
+                    leadingElement={<GlobeCheckedIcon size={18}/>}
+                    trailingElements={<ShortcutKey shortcutKey='T'/>}
+                    onClick={this.handleTranslateMenuItemActivated}
+                />
+
             </Menu.Container>
         );
     }
